@@ -1,4 +1,9 @@
 package exercise;
+/**
+ * The class defines the features of sandwich
+ * @author Rahul
+ *
+ */
 
 public class Sandwich {
 	private String mainIncredient;

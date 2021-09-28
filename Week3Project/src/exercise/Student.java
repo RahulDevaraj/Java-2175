@@ -1,4 +1,10 @@
 package exercise;
+/**
+ * Contains the data related to Student Class
+ * 
+ * @author Rahul
+ *
+ */
 
 public class Student {
 	private int id;
@@ -29,7 +35,10 @@ public class Student {
 	public void setGpa(float gpa) {
 		this.gpa = gpa;
 	}
-	
+	/**
+	 * Calculates GPA
+	 * @return Calculated GPA
+	 */
 	public float calcGpa()
 	{
 		this.gpa = (float)(points/(float)creditHours);
@@ -39,6 +48,12 @@ public class Student {
 	public String toString() {
 		return "Student Details : [id=" + id + ", creditHours=" + creditHours + ", points=" + points + ", gpa=" + gpa + "]";
 	}
+	/**
+	 * Parameterized Constructor
+	 * @param id
+	 * @param creditHours
+	 * @param points
+	 */
 	public Student(int id, int creditHours, int points) {
 		super();
 		this.id = id;
