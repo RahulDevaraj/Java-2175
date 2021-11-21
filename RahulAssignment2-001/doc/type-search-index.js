@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes","u":"allclasses-index.html"},{"p":"<Unnamed>","l":"Industry"},{"p":"<Unnamed>","l":"InvalidNameException"},{"p":"<Unnamed>","l":"InvalidShiftException"},{"p":"<Unnamed>","l":"ShiftWorker"},{"p":"<Unnamed>","l":"Worker"},{"p":"<Unnamed>","l":"WorkerDatabase"}];updateSearchResults();
