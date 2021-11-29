@@ -19,7 +19,7 @@ public class WorkerDatabase {
 	/**
 	 * Array
 	 */
-	public static Worker workers[] = new ShiftWorker[LENGTH];	
+	public static Worker workers[] = new Worker[LENGTH];	
 	
 	/**
 	 * Main function
