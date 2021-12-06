@@ -27,6 +27,8 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
+import java.awt.event.MouseMotionAdapter;
+import java.awt.event.MouseEvent;
 
 public class GUI extends JFrame {
 
@@ -42,6 +44,7 @@ public class GUI extends JFrame {
 	private JList listSchools_1;
 	private JList listProvinces;
 	private JButton btnProvinces;
+	private JList listNew;
 
 	/**
 	 * Launch the application.
@@ -69,7 +72,7 @@ public class GUI extends JFrame {
 	
 	private void setupComponents() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 972, 386);
+		setBounds(100, 100, 1149, 386);
 		cntPMain = new JPanel();
 		cntPMain.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setTitle("HAI");
@@ -117,30 +120,19 @@ public class GUI extends JFrame {
 		}
 		
 		listSchools_1 = new JList(schoolNames);
+		listSchools_1.addMouseMotionListener(new MouseMotionAdapter() {
+			
+			public void mouseMoved(MouseEvent e) {
+				listSchools_1.setToolTipText("Hey");
+			}
+		});
 		
 		listProvinces = new JList();
 		
 		btnProvinces = new JButton("Provinces");
 		
 
-//		DefaultListModel<String> provinces = new DefaultListModel<String>();
-//		Scanner sc = null;
-//		try {
-//			File file = new File("Provinces.txt");
-//			 sc = new Scanner(file);
-//			
-//			while(sc.hasNext())
-//			{
-//				provinces.addElement(sc.nextLine())
-//				
-//;					}
-//			
-//		} catch (FileNotFoundException e1) {
-//			// TODO Auto-generated catch block
-//			System.out.println(e1.getMessage());
-//		}
-//		listProvinces = new JList(provinces);
-//		sc.close();
+
 		btnProvinces.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				DefaultListModel<String> provincesList = new DefaultListModel<String>();
@@ -162,7 +154,39 @@ public class GUI extends JFrame {
 				
 				listProvinces.setModel(provincesList);
 				sc.close();
+				
+				
 
+			}
+		});
+		
+		listNew = new JList();
+		
+		JButton btnAdd = new JButton("Add");
+		btnAdd.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				String [] newProvinces = new String[10];
+				
+				int count  =0;
+				int toRemove =0;
+				String picked = listProvinces.getSelectedValue().toString();
+				toRemove = listProvinces.getSelectedIndex();
+				
+				newProvinces[count] = picked;
+				count++;
+				
+				DefaultListModel<String> newList = new DefaultListModel<>();
+				for(int x=0;x<count;x++) {
+					newList.addElement(newProvinces[x]);
+				}
+				
+				listNew.setModel(newList);
+				
+				DefaultListModel listRemoval = (DefaultListModel) listProvinces.getModel();
+				
+				listRemoval.remove(toRemove);
+			
 			}
 		});
 		
@@ -179,24 +203,27 @@ public class GUI extends JFrame {
 									.addComponent(lblName, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE)
 									.addGap(58))
 								.addGroup(gl_cntPMain.createSequentialGroup()
-									.addPreferredGap(ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+									.addPreferredGap(ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
 									.addGroup(gl_cntPMain.createParallelGroup(Alignment.LEADING)
 										.addComponent(rdBtnGrad, GroupLayout.PREFERRED_SIZE, 103, GroupLayout.PREFERRED_SIZE)
-										.addComponent(rdBtnUndergrad, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE))
+										.addComponent(rdBtnUndergrad, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE))
 									.addPreferredGap(ComponentPlacement.RELATED)))
-							.addPreferredGap(ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
+							.addPreferredGap(ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
 							.addGroup(gl_cntPMain.createParallelGroup(Alignment.TRAILING, false)
 								.addComponent(txtName, GroupLayout.PREFERRED_SIZE, 196, GroupLayout.PREFERRED_SIZE)
 								.addGroup(gl_cntPMain.createSequentialGroup()
 									.addComponent(cmBoxCourses, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 									.addGap(18)
 									.addComponent(cmBoxDept, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE)
-									.addGap(36))))
+									.addGap(36)))
+							.addPreferredGap(ComponentPlacement.RELATED))
 						.addGroup(gl_cntPMain.createSequentialGroup()
 							.addComponent(btnDisplay, GroupLayout.PREFERRED_SIZE, 144, GroupLayout.PREFERRED_SIZE)
 							.addGap(55)
-							.addComponent(btnClose, GroupLayout.PREFERRED_SIZE, 114, GroupLayout.PREFERRED_SIZE)))
-					.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(btnClose, GroupLayout.PREFERRED_SIZE, 114, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED, 157, Short.MAX_VALUE)
+							.addComponent(btnAdd)
+							.addGap(53)))
 					.addGroup(gl_cntPMain.createParallelGroup(Alignment.TRAILING)
 						.addGroup(gl_cntPMain.createSequentialGroup()
 							.addComponent(listSchools_1, GroupLayout.PREFERRED_SIZE, 126, GroupLayout.PREFERRED_SIZE)
@@ -205,7 +232,9 @@ public class GUI extends JFrame {
 							.addGap(95))
 						.addGroup(gl_cntPMain.createSequentialGroup()
 							.addComponent(btnProvinces, GroupLayout.PREFERRED_SIZE, 96, GroupLayout.PREFERRED_SIZE)
-							.addGap(390))))
+							.addGap(18)
+							.addComponent(listNew, GroupLayout.PREFERRED_SIZE, 114, GroupLayout.PREFERRED_SIZE)
+							.addGap(258))))
 		);
 		gl_cntPMain.setVerticalGroup(
 			gl_cntPMain.createParallelGroup(Alignment.LEADING)
@@ -226,13 +255,20 @@ public class GUI extends JFrame {
 								.addComponent(cmBoxCourses, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
 						.addComponent(listSchools_1, GroupLayout.PREFERRED_SIZE, 158, GroupLayout.PREFERRED_SIZE)
 						.addComponent(listProvinces, GroupLayout.PREFERRED_SIZE, 154, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
 					.addGroup(gl_cntPMain.createParallelGroup(Alignment.LEADING)
-						.addComponent(btnDisplay, GroupLayout.PREFERRED_SIZE, 64, GroupLayout.PREFERRED_SIZE)
-						.addGroup(gl_cntPMain.createParallelGroup(Alignment.TRAILING, false)
-							.addComponent(btnProvinces, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-							.addComponent(btnClose, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE)))
-					.addGap(43))
+						.addGroup(gl_cntPMain.createSequentialGroup()
+							.addPreferredGap(ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
+							.addGroup(gl_cntPMain.createParallelGroup(Alignment.LEADING)
+								.addComponent(btnDisplay, GroupLayout.PREFERRED_SIZE, 64, GroupLayout.PREFERRED_SIZE)
+								.addGroup(gl_cntPMain.createParallelGroup(Alignment.TRAILING, false)
+									.addComponent(btnAdd, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+									.addComponent(btnProvinces, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+									.addComponent(btnClose, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE)))
+							.addGap(43))
+						.addGroup(gl_cntPMain.createSequentialGroup()
+							.addGap(18)
+							.addComponent(listNew, GroupLayout.PREFERRED_SIZE, 133, GroupLayout.PREFERRED_SIZE)
+							.addContainerGap())))
 		);
 		cntPMain.setLayout(gl_cntPMain);
 	}
