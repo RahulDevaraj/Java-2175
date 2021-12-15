@@ -21,6 +21,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
+import java.sql.SQLNonTransientException;
 import java.sql.Statement;
 import java.awt.event.ActionEvent;
 import javax.swing.JTable;
@@ -204,13 +206,17 @@ public class BankGUI extends JFrame {
 			String insertSql = "INSERT INTO BankAccount (AccountNumber,FName,LName,Balance) VALUES ("+account.getAccountNumber()+
 					",'"+account.getfName()+"','"+account.getlName()+"',"+account.getBalance()+")";
 			statement.executeUpdate(insertSql);
+			
 			JOptionPane.showMessageDialog(null, "Successfull");
-
+						
 		
 			
-		} catch (SQLException e) {
-			// TODO: handle exception
-			//System.out.println(e.getMessage());
+		} 
+
+		catch(SQLException e) {
+		
+			System.out.println(e.getMessage());
+			if(e.getErrorCode() == -104)
 			JOptionPane.showMessageDialog(null, "Account ID Already Exists ");
 		}
 		
